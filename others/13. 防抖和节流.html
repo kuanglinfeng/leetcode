@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <button class="debounce">防抖</button>
+        <button class="throttle">节流</button>
+        <script>
+            const debounceButton = document.querySelector('.debounce');
+            const throttleButton = document.querySelector('.throttle');
+
+            function log() {
+                console.log('hello');
+            }
+
+            function setDebounce(fn, wait) {
+                let doing = false;
+                let timer = null;
+                return () => {
+                    if (doing) {
+                        clearTimeout(timer);
+                        doing = false;
+                    } else {
+                        doing = true;
+                        timer = setTimeout(() => {
+                            fn();
+                            doing = false;
+                        }, wait);
+                    }
+                };
+            }
+
+            function setThrottle(fn, wait) {
+                let doing = false;
+                return () => {
+                    if (!doing) {
+                        doing = true;
+                        setTimeout(() => {
+                            fn();
+                            doing = false;
+                        }, wait);
+                    }
+                };
+            }
+
+            throttleButton.onclick = setThrottle(log, 3000);
+            debounceButton.onclick = setDebounce(log, 3000);
+        </script>
+    </body>
+</html>

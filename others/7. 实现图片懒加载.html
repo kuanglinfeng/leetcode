@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+            }
+            .wrapper {
+                display: flex;
+                flex-direction: column;
+            }
+            .wrapper img {
+                margin: 40px auto;
+                width: 400px;
+                height: 300px;
+                border: 4px solid red;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrapper">
+            <img
+                src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3363295869,2467511306&fm=26&gp=0.jpg"
+            />
+            <img />
+            <img />
+            <img />
+            <img />
+            <img />
+            <img />
+        </div>
+        <script>
+            const urls = [
+                'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3363295869,2467511306&fm=26&gp=0.jpg',
+                'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=121352583,3553479540&fm=26&gp=0.jpg',
+                'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1730713693,2130926401&fm=26&gp=0.jpg',
+                'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2033921778,648007645&fm=26&gp=0.jpg',
+                'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1603365312,3218205429&fm=26&gp=0.jpg',
+                'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1473836766,4030812874&fm=26&gp=0.jpg',
+                'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2481321790,3127612340&fm=26&gp=0.jpg',
+            ];
+            const images = Array.from(document.querySelectorAll('.wrapper img'));
+
+            function init() {
+                images.forEach((image, index) => {
+                    image.setAttribute('data-src', urls[index]);
+                });
+            }
+            function isInViewport(element) {
+                return element.getBoundingClientRect().top <= document.documentElement.clientHeight;
+            }
+
+            function loadImages() {
+                images.forEach(image => {
+                    const url = image.getAttribute('data-src');
+                    if (isInViewport(image) && url) {
+                        image.src = url;
+                    }
+                });
+            }
+            init();
+            loadImages();
+            document.onscroll = function () {
+                loadImages();
+            };
+        </script>
+    </body>
+</html>
